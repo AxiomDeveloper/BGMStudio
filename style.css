@@ -1,0 +1,210 @@
+:root {
+  --bg-oled: #000000;
+  --glass-blur: 30px;
+  --accent-gold: #d4af37;
+  --text-primary: #f6f6f6;
+  --text-muted: #b9b9b9;
+  --panel-fill: rgba(255, 255, 255, 0.06);
+  --panel-stroke: rgba(255, 255, 255, 0.16);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "SF Pro Display", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(212, 175, 55, 0.16), transparent 35%),
+    radial-gradient(circle at 88% 12%, rgba(255, 255, 255, 0.08), transparent 38%),
+    var(--bg-oled);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.studio-shell {
+  width: min(940px, 100%);
+  margin: 0 auto;
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.glass {
+  background: var(--panel-fill);
+  border: 1px solid var(--panel-stroke);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.panel {
+  border-radius: 16px;
+  padding: 14px;
+}
+
+#studio-topbar {
+  border-radius: 16px;
+  padding: 14px;
+}
+
+#studio-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-gold);
+}
+
+#studio-title {
+  margin: 0.3rem 0 0;
+  font-size: clamp(1.5rem, 2vw + 0.8rem, 2rem);
+}
+
+#bridge-target {
+  margin: 0.45rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.status-row + .status-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.status-label {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+}
+
+.status-chip {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 0.2rem 0.66rem;
+  font-size: 0.74rem;
+}
+
+.chip-good {
+  background: rgba(10, 160, 74, 0.2);
+  border-color: rgba(10, 160, 74, 0.45);
+}
+
+.chip-warn {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: rgba(212, 175, 55, 0.45);
+}
+
+.chip-bad {
+  background: rgba(218, 54, 51, 0.2);
+  border-color: rgba(218, 54, 51, 0.45);
+}
+
+#editor-panel {
+  display: grid;
+  gap: 8px;
+}
+
+#editor-panel label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+#json-editor {
+  width: 100%;
+  min-height: 44dvh;
+  resize: vertical;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--text-primary);
+  font: 0.85rem/1.45 "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  padding: 12px;
+}
+
+#ship-panel h2 {
+  margin: 0;
+  font-size: 1.04rem;
+}
+
+.grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+label {
+  display: grid;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+input {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--text-primary);
+  padding: 10px;
+  font: inherit;
+}
+
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  padding: 10px 14px;
+  font: inherit;
+}
+
+.btn-ship {
+  background: linear-gradient(145deg, rgba(212, 175, 55, 0.26), rgba(212, 175, 55, 0.14));
+  border-color: rgba(212, 175, 55, 0.48);
+}
+
+.gpu-layer,
+.panel,
+.btn,
+#json-editor {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* @ANTIGRAVITY_INJECT: [CONTROL_ROOM_BLUR_AND_DOCK_MOTION] */
+#studio-shell {
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+/* @ANTIGRAVITY_INJECT: [SHIP_BUTTON_HAPTIC_PULSE_VISUAL] */
+.btn-ship:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="BGMstudio Control Room">
+    <title>BGMstudio Control Room</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="studio-shell" class="studio-shell gpu-layer">
+      <header id="studio-topbar" class="glass">
+        <p id="studio-eyebrow">BGMstudio</p>
+        <h1 id="studio-title">Control Room</h1>
+        <p id="bridge-target">Bridge: ../BGMwebsite/content.json</p>
+      </header>
+
+      <section id="status-panel" class="glass panel">
+        <div class="status-row">
+          <span class="status-label">Bridge</span>
+          <span id="bridge-status" class="status-chip chip-warn">Checking</span>
+        </div>
+        <div class="status-row">
+          <span class="status-label">JSON</span>
+          <span id="json-status" class="status-chip chip-warn">Unparsed</span>
+        </div>
+        <div class="status-row">
+          <span class="status-label">Last Ship</span>
+          <span id="ship-status" class="status-chip">Idle</span>
+        </div>
+      </section>
+
+      <section id="editor-panel" class="glass panel">
+        <label for="json-editor">Live Content JSON</label>
+        <textarea id="json-editor" spellcheck="false" aria-label="Content JSON editor"></textarea>
+      </section>
+
+      <section id="ship-panel" class="glass panel">
+        <h2>Ship to GitHub Pages</h2>
+        <div class="grid">
+          <label>
+            Owner
+            <input id="gh-owner" type="text" placeholder="org-or-user">
+          </label>
+          <label>
+            Repo
+            <input id="gh-repo" type="text" placeholder="BGMwebsite">
+          </label>
+          <label>
+            Branch
+            <input id="gh-branch" type="text" value="main">
+          </label>
+          <label>
+            Token
+            <input id="gh-token" type="password" placeholder="github_pat_...">
+          </label>
+          <label>
+            Path
+            <input id="gh-path" type="text" value="content.json">
+          </label>
+          <label>
+            Message
+            <input id="gh-message" type="text" value="chore(content): ship update">
+          </label>
+        </div>
+        <div class="actions">
+          <button id="reload-btn" class="btn">Reload Bridge</button>
+          <button id="ship-btn" class="btn btn-ship">Ship</button>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
