@@ -1,75 +1,113 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="BGMstudio Control Room">
-    <title>BGMstudio Control Room</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <div id="studio-shell" class="studio-shell gpu-layer">
-      <header id="studio-topbar" class="glass">
-        <p id="studio-eyebrow">BGMstudio</p>
-        <h1 id="studio-title">Control Room</h1>
-        <p id="bridge-target">Bridge: ../BGMwebsite/content.json</p>
-      </header>
 
-      <section id="status-panel" class="glass panel">
-        <div class="status-row">
-          <span class="status-label">Bridge</span>
-          <span id="bridge-status" class="status-chip chip-warn">Checking</span>
-        </div>
-        <div class="status-row">
-          <span class="status-label">JSON</span>
-          <span id="json-status" class="status-chip chip-warn">Unparsed</span>
-        </div>
-        <div class="status-row">
-          <span class="status-label">Last Ship</span>
-          <span id="ship-status" class="status-chip">Idle</span>
-        </div>
-      </section>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>BGM STUDIO | COMMAND</title>
+  <link rel="stylesheet" href="studio.css">
+</head>
 
-      <section id="editor-panel" class="glass panel">
-        <label for="json-editor">Live Content JSON</label>
-        <textarea id="json-editor" spellcheck="false" aria-label="Content JSON editor"></textarea>
-      </section>
+<body class="bgm-os">
 
-      <section id="ship-panel" class="glass panel">
-        <h2>Ship to GitHub Pages</h2>
-        <div class="grid">
-          <label>
-            Owner
-            <input id="gh-owner" type="text" placeholder="org-or-user">
-          </label>
-          <label>
-            Repo
-            <input id="gh-repo" type="text" placeholder="BGMwebsite">
-          </label>
-          <label>
-            Branch
-            <input id="gh-branch" type="text" value="main">
-          </label>
-          <label>
-            Token
-            <input id="gh-token" type="password" placeholder="github_pat_...">
-          </label>
-          <label>
-            Path
-            <input id="gh-path" type="text" value="content.json">
-          </label>
-          <label>
-            Message
-            <input id="gh-message" type="text" value="chore(content): ship update">
-          </label>
+  <section id="view-dashboard" class="view active">
+    <header class="hub-header">
+      <div class="brand">BGM</div>
+      <p>Production Suite</p>
+    </header>
+
+    <div class="tool-grid">
+      <div class="tool-card primary" onclick="studio.router('creator')">
+        <div class="icon">✦</div>
+        <div class="card-meta">
+          <h3>Create Article</h3>
+          <p>Assemble cinematic narratives</p>
         </div>
-        <div class="actions">
-          <button id="reload-btn" class="btn">Reload Bridge</button>
-          <button id="ship-btn" class="btn btn-ship">Ship</button>
-        </div>
-      </section>
+      </div>
+      <div class="tool-card" onclick="studio.router('manager')">
+        <div class="icon">▤</div>
+        <h3>Management</h3>
+        <p>Edit database</p>
+      </div>
+      <div class="tool-card" onclick="studio.router('hero-config')">
+        <div class="icon">◎</div>
+        <h3>Hero Select</h3>
+        <p>Front page feature</p>
+      </div>
+      <div class="tool-card" onclick="studio.router('clips')">
+        <div class="icon">⚡</div>
+        <h3>Clips</h3>
+        <p>Instagram / Reel Links</p>
+      </div>
     </div>
+  </section>
 
-    <script type="module" src="main.js"></script>
-  </body>
+  <section id="view-clips" class="view">
+    <header class="view-header">
+      <button onclick="studio.router('dashboard')" class="back-btn">✕</button>
+      <h1>Clips Feed</h1>
+      <button onclick="studio.saveClips()" class="ship-btn">Sync Feed</button>
+    </header>
+
+    <div class="clips-container">
+      <div class="clip-card new" onclick="studio.addClip()">
+        <div class="icon">＋</div>
+        <p>Add Clip</p>
+      </div>
+      <div id="clips-grid" class="clips-grid"></div>
+    </div>
+  </section>
+
+  <section id="view-creator" class="view">
+    <nav class="creator-nav">
+      <button onclick="studio.router('dashboard')" class="back-btn">✕</button>
+      <div class="sync-status" id="sync-indicator">Ready</div>
+      <button onclick="studio.ship()" class="ship-btn">Ship Article</button>
+    </nav>
+    <div class="canvas">
+      <div class="canvas-hero" id="c-hero-trigger">
+        <img id="c-hero-preview" src="">
+        <div class="hero-placeholder"><span class="icon">⊕</span>
+          <p>Set Hero Image</p>
+        </div>
+        <input type="hidden" id="c-hero-url">
+      </div>
+      <div class="canvas-content">
+        <input type="text" id="c-label" class="c-input-label" placeholder="LABEL">
+        <textarea id="c-title" class="c-input-h1" placeholder="The Headline" rows="1"></textarea>
+        <input type="text" id="c-sub" class="c-input-sub" placeholder="Sub-headline...">
+        <div class="tag-row" id="c-tags"><span class="tag-add" onclick="studio.addTag()">+ Tag</span></div>
+        <div id="stack-area"></div>
+        <div class="stack-adder">
+          <button class="add-trigger">⊕</button>
+          <div class="add-menu">
+            <div onclick="studio.addBlock('text')">Text</div>
+            <div onclick="studio.addBlock('video')">Video</div>
+            <div onclick="studio.addBlock('image')">Image</div>
+            <div onclick="studio.addBlock('infographic')">Data</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-manager" class="view">
+    <header class="view-header">
+      <button onclick="studio.router('dashboard')" class="back-btn">←</button>
+      <input type="text" id="manager-search" placeholder="Search..." oninput="studio.filterManager()">
+    </header>
+    <div class="manager-list" id="manager-list"></div>
+  </section>
+
+  <div id="token-modal" class="modal">
+    <div class="modal-content">
+      <h3>Authorization</h3>
+      <input type="password" id="gh-token" placeholder="GitHub Token">
+      <button onclick="studio.saveToken()">Connect</button>
+    </div>
+  </div>
+
+  <script src="studio.js"></script>
+</body>
+
 </html>

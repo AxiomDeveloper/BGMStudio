@@ -1,0 +1,306 @@
+:root {
+    --apple-bg: #000;
+    --apple-card: #121212;
+    --apple-accent: #007aff;
+    --text-primary: #ffffff;
+    --text-secondary: #86868b;
+    --glass: rgba(255, 255, 255, 0.04);
+    --border: rgba(255, 255, 255, 0.1);
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.bgm-os {
+    background: var(--apple-bg);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* --- Navigation & Views --- */
+.view {
+    display: none;
+    min-height: 100vh;
+    animation: fadeIn 0.4s var(--ease);
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Dashboard Hub --- */
+.hub-header {
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+}
+
+.hub-header .brand {
+    font-weight: 900;
+    font-size: 2.5rem;
+    letter-spacing: -2px;
+}
+
+.hub-header p {
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tool-card {
+    background: var(--apple-card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    border-radius: 32px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease);
+}
+
+.tool-card:hover {
+    border-color: #444;
+    transform: scale(1.02);
+    background: #1a1a1a;
+}
+
+.tool-card .icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--apple-accent);
+}
+
+.tool-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.tool-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+}
+
+/* --- Creator Canvas --- */
+.creator-nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+}
+
+.ship-btn {
+    background: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.canvas {
+    padding-top: 70px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.canvas-hero {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 40px 40px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+.hero-placeholder {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.canvas-content {
+    padding: 4rem 2rem;
+}
+
+.c-input-label {
+    background: transparent;
+    border: none;
+    color: var(--apple-accent);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    width: 100%;
+    outline: none;
+}
+
+.c-input-h1 {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 4rem;
+    font-weight: 900;
+    width: 100%;
+    outline: none;
+    margin: 1rem 0;
+    resize: none;
+    letter-spacing: -3px;
+}
+
+.c-input-sub {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    width: 100%;
+    outline: none;
+    margin-bottom: 3rem;
+}
+
+/* --- Stackable Blocks --- */
+.block {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.block textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #ccc;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    outline: none;
+    resize: none;
+}
+
+.stack-adder {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 4rem 0;
+}
+
+.add-trigger {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.add-menu {
+    position: absolute;
+    bottom: 60px;
+    background: #222;
+    border-radius: 20px;
+    padding: 10px;
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid #444;
+}
+
+.stack-adder:hover .add-menu {
+    display: flex;
+}
+
+.add-menu div {
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.add-menu div:hover {
+    background: var(--apple-accent);
+}
+
+/* --- Manager List --- */
+.manager-list {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.m-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--apple-card);
+    padding: 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+}
+
+.m-item img {
+    width: 80px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.m-item-info {
+    flex: 1;
+}
+
+.m-item-actions button {
+    background: none;
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+/* --- Mobile First Overrides --- */
+@media (max-width: 768px) {
+    .c-input-h1 {
+        font-size: 2.5rem;
+    }
+
+    .tool-grid {
+        padding: 1rem;
+    }
+}
